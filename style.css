@@ -388,21 +388,23 @@ body.dark-mode #loopPreview:hover {
 }
 
 /* --- Green (Light) / Blue (Dark) Buttons --- */
-#cloneItem, #exportCanvas {
+#cloneItem, #exportCanvas, #flipSpline {
     background-color: var(--accent-green);
     color: #fff;
 }
-#cloneItem:hover, #exportCanvas:hover {
+#cloneItem:hover, #exportCanvas:hover, #flipSpline:hover {
     background-color: var(--accent-green-hover);
     box-shadow: 0 0 15px 1px var(--glow-green);
 }
 body.dark-mode #cloneItem,
-body.dark-mode #exportCanvas {
+body.dark-mode #exportCanvas,
+body.dark-mode #flipSpline {
     background-color: var(--accent-primary);
     color: #000000;
 }
 body.dark-mode #cloneItem:hover,
-body.dark-mode #exportCanvas:hover {
+body.dark-mode #exportCanvas:hover,
+body.dark-mode #flipSpline:hover {
     background-color: var(--accent-primary-hover);
     box-shadow: 0 0 15px 1px var(--glow-primary);
 }
@@ -553,4 +555,36 @@ body.dark-mode .collapsible-header:hover { background-color: var(--bg-surface); 
     width: 100%;
     height: 100%;
     cursor: default;
+}
+
+/* Dropdown styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 12px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    border-radius: 12px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }

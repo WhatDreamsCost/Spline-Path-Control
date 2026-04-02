@@ -141,6 +141,8 @@ function setupEventListeners() {
   document.getElementById('clearBg').addEventListener('click', () => { backgroundImg = null; document.getElementById('bgImage').value = ''; recordState(); });
   document.getElementById('bgImage').addEventListener('change', handleSceneFile);
   document.getElementById('addPoint').addEventListener('click', addPointToSpline);
+  document.getElementById('flipX').addEventListener('click', () => flipSpline(true));
+  document.getElementById('flipY').addEventListener('click', () => flipSpline(false));
   document.getElementById('addShape').addEventListener('click', addStaticShape);
   document.getElementById('updateCanvasSize').addEventListener('click', updateCanvasSize);
   document.getElementById('resetCanvasSize').addEventListener('click', resetCanvasSize);
@@ -1590,6 +1592,44 @@ function addPointToSpline() {
         }
         recordState();
     }
+}
+
+/**
+ * Flips the spline about the specified axis at the center of the bounding box of all points
+ */
+function flipSpline(horizontal) {
+  const splinesToFlip = new Set();
+
+  if (multiSelection.length > 0) {
+    multiSelection.forEach(item => {
+      const owner = getOwnerOfItem(item);
+      if (owner && !owner.isStatic) {
+        splinesToFlip.add(owner);
+      }
+    });
+  } else if (selectedSpline) {
+    splinesToFlip.add(selectedSpline);
+  }
+
+  if (splinesToFlip.size === 0) {
+    return;
+  }
+
+  splinesToFlip.forEach(spline => {
+    if (spline.points.length === 0) return;
+
+    const coord = horizontal ? 'x' : 'y';
+    const coords = spline.points.map(p => p[coord]);
+    const min = Math.min(...coords);
+    const max = Math.max(...coords);
+    const center = (min + max) / 2;
+
+    spline.points.forEach(p => {
+      p[coord] = center - (p[coord] - center);
+    });
+  });
+
+  recordState();
 }
 
 // ==============================
